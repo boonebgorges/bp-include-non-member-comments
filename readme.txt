@@ -14,8 +14,8 @@ By default, BuddyPress does not include comments from non-members (or non-logged
 
 == Installation ==
 
-*Upload the directory '/bp-include-non-member-comments/' to your WP plugins directory and activate from the Dashboard of the main blog.
-*If you're using a version of BP prior to 1.2, you'll need to uncomment lines 13 and 14 of the plugin in order to activate it.
+* Upload the directory '/bp-include-non-member-comments/' to your WP plugins directory and activate from the Dashboard of the main blog.
+* If you're using a version of BP prior to 1.2, you'll need to uncomment lines 13 and 14 of the plugin in order to activate it.
 
 == Changelog ==
 
