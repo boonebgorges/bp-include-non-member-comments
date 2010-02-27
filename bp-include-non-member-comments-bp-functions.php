@@ -42,7 +42,7 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 			$comment_link = bp_post_get_permalink( $comment->post, $wpdb->blogid ) . '#comment-' . $comment_id;
 		else
 			$comment_link = get_permalink( $comment->comment_post_ID ) . '#comment-' . $comment_id;
-		$activity_action = sprintf( __( '%s commented on the blog post %s', 'buddypress' ), '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>', '<a href="' . $comment_link . '#comment-' . $comment->comment_ID . '">' . $comment->post->post_title . '</a>' );
+		$activity_action = sprintf( __( '%s commented on the blog post %s', 'buddypress' ), '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>', '<a href="' . $comment_link . '">' . $comment->post->post_title . '</a>' );
 		$activity_content = $comment->comment_content;
 
 		/* Record this in activity streams */
