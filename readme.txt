@@ -2,7 +2,7 @@
 Contributors: boonebgorges, cuny-academic-commons
 Tags: buddypress, comments, blogs, activity, non-members
 Requires at least: WPMU 2.8, BuddyPress 1.1
-Tested up to: WPMU 2.9.1.1, BuddyPress 1.2-rc
+Tested up to: WPMU 2.9.1.1, BuddyPress 1.2.1
 Donate link: http://teleogistic.net/donate/
 Stable tag: trunk
 
@@ -21,3 +21,7 @@ By default, BuddyPress does not include comments from non-members (or non-logged
 
 = 1.0 =
 * Initial release
+
+= 1.1 =
+* Normalized file structure to latest BP standards (bp_init)
+* Fixed problem with deprecated bp_post_get_permalink
