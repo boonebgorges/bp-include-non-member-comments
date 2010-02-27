@@ -25,3 +25,6 @@ By default, BuddyPress does not include comments from non-members (or non-logged
 = 1.1 =
 * Normalized file structure to latest BP standards (bp_init)
 * Fixed problem with deprecated bp_post_get_permalink
+
+= 1.1.1 =
+* Fixed comment link bug (thanks unknown!)
