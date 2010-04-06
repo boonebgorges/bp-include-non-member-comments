@@ -1,5 +1,10 @@
 <?php
 
+function bp_blogs_record_nonmember_comment_approved( $comment_id, $comment_status ) {
+	if ( $comment_status = 'approve' )
+		bp_blogs_record_nonmember_comment( $comment_id, 1 );
+}
+
 
 function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 	global $wpdb, $bp;
@@ -9,40 +14,18 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 
 	$comment = get_comment($comment_id);
 	$comment->post = get_post( $comment->comment_post_ID );
-	
-	/* Get the user_id from the author email. */
-	$user = get_user_by_email( $comment->comment_author_email );
-	$user_id = (int)$user->ID;
 
-	if ( $user_id )
-		return false;
 
 	/* If this is a password protected post, don't record the comment */
 	if ( !empty( $post->post_password ) )
 		return false;
-		
-	/* If we're on a multiblog install, record this post */
-	if ( function_exists('bp_core_is_multisite') && bp_core_is_multisite() || !function_exists('bp_core_is_multisite') ) {
-	
-		$recorded_comment = new BP_Blogs_Comment;
-		$recorded_comment->user_id = false;
-		$recorded_comment->blog_id = $wpdb->blogid;
-		$recorded_comment->comment_id = $comment_id;
-		$recorded_comment->comment_post_id = $comment->comment_post_ID;
-		$recorded_comment->date_created = strtotime( $comment->comment_date_gmt );
-
-		$recorded_commment_id = $recorded_comment->save();
-
-		bp_blogs_update_blogmeta( $recorded_comment->blog_id, 'last_activity', gmdate( "Y-m-d H:i:s" ) );
-	}
 
 	if ( (int)get_blog_option( $recorded_comment->blog_id, 'blog_public' ) || !bp_core_is_multisite() ) {
 		/* Record in activity streams */
-		if ( function_exists( 'bp_post_get_permalink' ) ) // backward compatibility for 1.2RC
-			$comment_link = bp_post_get_permalink( $comment->post, $wpdb->blogid ) . '#comment-' . $comment_id;
-		else
-			$comment_link = get_permalink( $comment->comment_post_ID ) . '#comment-' . $comment_id;
+		$comment_link = get_permalink( $comment->comment_post_ID ) . '#comment-' . $comment_id;
+		
 		$activity_action = sprintf( __( '%s commented on the blog post %s', 'buddypress' ), '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>', '<a href="' . $comment_link . '">' . $comment->post->post_title . '</a>' );
+		
 		$activity_content = $comment->comment_content;
 
 		/* Record this in activity streams */
@@ -59,6 +42,7 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 	}
 
 	return $recorded_comment;
+
 }
 
 /* For BP < 1.2 */
@@ -70,13 +54,6 @@ function bp_blogs_record_nonmember_comment_old( $comment_id, $is_approved ) {
 
 	$comment = get_comment($comment_id);
 	$comment->post = get_post( $comment->comment_post_ID );
-
-	/* Get the user_id from the author email. */
-	$user = get_user_by_email( $comment->comment_author_email );
-	$user_id = (int)$user->ID;
-
-	if ( $user_id )
-		return false;
 
 	/* If this is a password protected post, don't record the comment */
 	if ( !empty( $post->post_password ) )
