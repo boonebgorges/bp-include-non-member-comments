@@ -3,7 +3,7 @@
 Plugin Name: BP Include Non-member Comments
 Plugin URI: http://teleogistic.net/code/buddypress/bp-include-non-member-comments
 Description: Inserts blog comments from non-logged-in users into the activity stream 
-Version: 1.2
+Version: 1.2.1
 Author: Boone Gorges
 Author URI: http://teleogistic.net
 Site Wide Only: true

@@ -21,6 +21,10 @@ Please note: the latest version of this plugin (1.2) will NOT work with versions
 
 == Changelog ==
 
+= 1.2.1 =
+* Added checks for spam status 
+* Fixed bug that made approved comments from site members appear twice
+
 = 1.2 =
 * Adapted to BuddyPress's new comment activity recording method
 * Comment approval now posts to the activity stream as well (as a new comment)

@@ -13,6 +13,15 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 		return false;
 
 	$comment = get_comment($comment_id);
+	
+	/* Thanks, Andrius! */
+	if ( $comment->comment_approved == 'spam' )
+		return false;
+	
+	if ( email_exists( $comment->comment_author_email ) )
+		return false;
+	
+	
 	$comment->post = get_post( $comment->comment_post_ID );
 
 
