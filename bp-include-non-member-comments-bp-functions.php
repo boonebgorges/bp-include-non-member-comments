@@ -53,7 +53,6 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 	}
 
 	return $comment;
-
 }
 
 /* For BP < 1.2 */
