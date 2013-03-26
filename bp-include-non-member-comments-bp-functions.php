@@ -14,6 +14,10 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 
 	$comment = get_comment($comment_id);
 
+	if ( empty( $comment ) ) {
+		return;
+	}
+
 	/* Thanks, Andrius! */
 	if ( $comment->comment_approved == 'spam' )
 		return false;
