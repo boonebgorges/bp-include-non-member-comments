@@ -32,17 +32,17 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 	if ( (int)get_blog_option( $recorded_comment->blog_id, 'blog_public' ) || !bp_core_is_multisite() ) {
 		/* Record in activity streams */
 		$comment_link = get_permalink( $comment->comment_post_ID ) . '#comment-' . $comment_id;
-		
+
 		$activity_action = sprintf( __( '%s commented on the blog post %s', 'buddypress' ), '<a href="' . $comment->comment_author_url . '">' . $comment->comment_author . '</a>', '<a href="' . $comment_link . '">' . $comment->post->post_title . '</a>' );
-		
+
 		$activity_content = $comment->comment_content;
 
 		/* Record this in activity streams */
 		bp_blogs_record_activity( array(
 			'user_id' => false,
-			'action' => apply_filters( 'bp_blogs_activity_new_comment_action', $activity_action, &$comment, &$recorded_comment, $comment_link ),
-			'content' => apply_filters( 'bp_blogs_activity_new_comment_content', $activity_content, &$comment, &$recorded_comment, $comment_link ),
-			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, &$comment, &$recorded_comment ),
+			'action' => apply_filters( 'bp_blogs_activity_new_comment_action', $activity_action, $comment, $recorded_comment, $comment_link ),
+			'content' => apply_filters( 'bp_blogs_activity_new_comment_content', $activity_content, $comment, $recorded_comment, $comment_link ),
+			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, $comment, $recorded_comment ),
 			'type' => 'new_blog_comment',
 			'item_id' => $wpdb->blogid,
 			'secondary_item_id' => $comment_id,
@@ -88,8 +88,8 @@ function bp_blogs_record_nonmember_comment_old( $comment_id, $is_approved ) {
 		/* Record this in activity streams */
 		bp_blogs_record_activity( array(
 			'user_id' => $recorded_comment->user_id,
-			'content' => apply_filters( 'bp_blogs_activity_new_comment', $activity_content, &$comment, &$recorded_comment, $comment_link ),
-			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, &$comment, &$recorded_comment ),
+			'content' => apply_filters( 'bp_blogs_activity_new_comment', $activity_content, comment, recorded_comment, $comment_link ),
+			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, comment, recorded_comment ),
 			'component_action' => 'new_blog_comment',
 			'item_id' => $comment_id,
 			'secondary_item_id' => $recorded_comment->blog_id,
