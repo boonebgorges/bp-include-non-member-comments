@@ -27,7 +27,7 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 	if ( !empty( $post->post_password ) )
 		return false;
 
-	if ( (int)get_blog_option( $recorded_comment->blog_id, 'blog_public' ) || !bp_core_is_multisite() ) {
+	if ( (int)get_blog_option( $comment->blog_id, 'blog_public' ) || !bp_core_is_multisite() ) {
 		/* Record in activity streams */
 		$comment_link = get_permalink( $comment->comment_post_ID ) . '#comment-' . $comment_id;
 
@@ -38,9 +38,9 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 		/* Record this in activity streams */
 		bp_blogs_record_activity( array(
 			'user_id' => false,
-			'action' => apply_filters( 'bp_blogs_activity_new_comment_action', $activity_action, $comment, $recorded_comment, $comment_link ),
-			'content' => apply_filters( 'bp_blogs_activity_new_comment_content', $activity_content, $comment, $recorded_comment, $comment_link ),
-			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, $comment, $recorded_comment ),
+			'action' => apply_filters( 'bp_blogs_activity_new_comment_action', $activity_action, $comment, $comment, $comment_link ),
+			'content' => apply_filters( 'bp_blogs_activity_new_comment_content', $activity_content, $comment, $comment, $comment_link ),
+			'primary_link' => apply_filters( 'bp_blogs_activity_new_comment_primary_link', $comment_link, $comment, $comment ),
 			'type' => 'new_blog_comment',
 			'item_id' => $wpdb->blogid,
 			'secondary_item_id' => $comment_id,
@@ -48,7 +48,7 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 		) );
 	}
 
-	return $recorded_comment;
+	return $comment;
 
 }
 
