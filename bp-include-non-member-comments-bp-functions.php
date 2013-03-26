@@ -13,17 +13,15 @@ function bp_blogs_record_nonmember_comment( $comment_id, $is_approved ) {
 		return false;
 
 	$comment = get_comment($comment_id);
-	
+
 	/* Thanks, Andrius! */
 	if ( $comment->comment_approved == 'spam' )
 		return false;
-	
+
 	if ( email_exists( $comment->comment_author_email ) )
 		return false;
-	
-	
-	$comment->post = get_post( $comment->comment_post_ID );
 
+	$comment->post = get_post( $comment->comment_post_ID );
 
 	/* If this is a password protected post, don't record the comment */
 	if ( !empty( $post->post_password ) )
@@ -104,14 +102,14 @@ function bp_blogs_record_nonmember_comment_old( $comment_id, $is_approved ) {
 
 function bp_nonmember_comment_content( $content ) {
 	global $bp;
-	
+
 	if ( $bp->loggedin_user->id != 0 )
 		return $content;
-	
+
 	/* Todo: Add patch to core that makes these buttons not appear for user_id=0 */
 	$content = preg_replace( "|(View</a>).*?<a href=.+?>Delete</a></span>|", '$1</span>', $content ); // for bp-default 1.2+
 	$content = preg_replace( "|<span class=\"activity-delete-link.+?</span>|", '', $content ); // for bp-classic
-	
+
 	return $content;
 }
 ?>
